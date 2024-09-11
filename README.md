@@ -2,7 +2,7 @@
 执行
 
 ```shell
-# bash <(curl -L https://raw.githubusercontent.com/279458179/vscode/main/wnshell.sh)
+bash <(curl -L https://raw.githubusercontent.com/279458179/vscode/main/wnshell.sh)
 ```
 
 显示界面

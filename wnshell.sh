@@ -264,7 +264,7 @@ deploy_vsftpd() {
     echo "pasv_enable=YES" | sudo tee -a /etc/vsftpd/vsftpd.conf
     echo "pasv_min_port=30000" | sudo tee -a /etc/vsftpd/vsftpd.conf
     echo "pasv_max_port=31000" | sudo tee -a /etc/vsftpd/vsftpd.conf
-    echo "pasv_address=$(curl -s ifconfig.me)" | sudo tee -a /etc/vsftpd/vsftpd.conf  # 获取服务器公网IP
+    echo "pasv_address=$(ip a |grep "inet " |grep brd |awk '{print $2}' |cut -d / -f 1)" | sudo tee -a /etc/vsftpd/vsftpd.conf  # 获取服务器公网IP
     # echo "pasv_address=192.168.100.2" | sudo tee -a /etc/vsftpd/vsftpd.conf  # 获取服务器公网IP
 
     # 配置 vsftpd 使用 22001 端口

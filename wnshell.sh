@@ -340,6 +340,57 @@ lvm_partition_and_mount() {
     echo "Disk $disk has been partitioned, formatted, and mounted to $mount_point."
 }
 
+#安装最新版本python3
+install_python3_12() {
+    echo "Installing Python 3.12..."
+
+    if [ "$OS" == "CentOS" ] || [ "$OS" == "AlmaLinux" ]; then
+        # 启用 EPEL 和 CRB 源 (AlmaLinux 使用 crb 而不是 powertools)
+        sudo yum install -y epel-release
+        sudo yum config-manager --set-enabled crb
+        
+        # 安装依赖包
+        sudo yum install -y gcc make wget openssl-devel bzip2-devel libffi-devel zlib-devel
+        
+        # 下载并编译 Python 3.12
+        cd /usr/src
+        sudo wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tgz
+        
+        # 解压和安装
+        sudo tar xzf Python-3.12.0.tgz
+        cd Python-3.12.0
+        sudo ./configure --enable-optimizations
+        sudo make altinstall
+        
+        # 配置 Python 3.12 环境变量
+        sudo ln -sf /usr/local/bin/python3.12 /usr/bin/python3
+        sudo ln -sf /usr/local/bin/pip3.12 /usr/bin/pip3
+        echo "Python 3.12 has been installed on $OS."
+        python3 --version
+
+    elif [ "$OS" == "Ubuntu" ]; then
+        # 更新 Ubuntu 包管理器
+        sudo apt update
+        
+        # 安装 Python 3.12 所需依赖
+        sudo apt install -y software-properties-common build-essential libssl-dev zlib1g-dev libncurses5-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+        
+        # 添加 Python 3.12 PPA 源并安装
+        sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt update
+        sudo apt install -y python3.12 python3.12-dev python3.12-venv python3.12-distutils
+        
+        # 配置 Python 3.12 环境变量
+        sudo ln -sf /usr/bin/python3.12 /usr/bin/python3
+        sudo ln -sf /usr/bin/pip3.12 /usr/bin/pip3
+        echo "Python 3.12 has been installed on Ubuntu."
+        python3 --version
+    else
+        echo "Unsupported OS."
+        exit 1
+    fi
+}
+
 
 
 # 显示菜单
@@ -353,6 +404,7 @@ show_menu() {
     echo -e "\033[32m6. 配置ssh互信\033[0m"
     echo -e "\033[32m7. 部署vsftpd服务\033[0m"
     echo -e "\033[32m8. 磁盘挂载LVM\033[0m"
+    echo -e "\033[32m9. 编译安装python3.12\033[0m"
     echo -e "\033[32m0. 退出\033[0m"
 }
 
@@ -372,6 +424,7 @@ main() {
         6) configure_ssh_trust ;;
         7) deploy_vsftpd ;;
         8) lvm_partition_and_mount ;;
+        9) install_python3_12 ;;
         0) exit 0 ;;
         *) echo "无效的选项: $choice" ;;
         esac

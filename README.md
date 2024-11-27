@@ -21,5 +21,5 @@ bash <(curl -L https://raw.githubusercontent.com/279458179/vscode/main/wnshell.s
 
 ```
 
-懂得都懂，持续更新中。。。
+持续更新中。。。
 

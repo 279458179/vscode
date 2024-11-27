@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "addSourceRootsToPythonpath": true,
+            "request": "launch",
+            "console": "integratedTerminal",
+            "jinja": true,
+            "python": "${command:python.interpreterPath}",
+            "envFile": "${workspaceFolder}/.env",
+            "stopOnEntry": false,
+            "redirectOutput": true,
+            "program": "${workspaceFolder}\\youtube_downloader.py",
+            "env": {},
+            "type": "python",
+            "logToFile": true,
+            "args": [],
+            "cwd": "D:\\software\\github\\vscode",
+            "subProcess": false,
+            "justMyCode": true,
+            "pythonArgs": [],
+            "name": "youtube_downloader",
+            "showReturnValue": true
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "currentFileConfiguration": true,
+            "cwd": "${fileDirname}",
+            "console": "internalConsole",
+            "addSourceRootsToPythonpath": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
+            }
+        }
+    ]
+}
